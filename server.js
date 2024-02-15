@@ -10,7 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 // Parse JSON bodies (as sent by API clients)
 app.use(express.json());
 
-//Handle GET requests to fetch users
+//Handle GET request to fetch users
 app.get('/users', async (req, res) => {
   const limit = +req.query.limit || 10;
 
@@ -41,6 +41,28 @@ app.post('/convert', (req, res) => {
       </p>
     `);
   }, 1000);
+});
+
+//Handle GET request to fetch for polling example
+
+let counter = 0;
+
+app.get('/poll', async (req, res) => {
+  counter++;
+
+  const data = { value: counter };
+
+  res.json(data);
+});
+
+//Handle GET request for weather
+
+let currentTemperature = 20;
+
+app.get('/get-temperature', async (req, res) => {
+  currentTemperature += Math.random() * 2 - 1; //Random temp change
+
+  res.send(currentTemperature.toFixed(1) + 'ºC');
 });
 
 //Start the server
